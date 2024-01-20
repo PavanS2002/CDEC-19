@@ -1,6 +1,19 @@
-FROM alpine
-RUN apt-get install node.js -y
-WORKDIR /FULL-devops/frontend/
-RUN npm install 
-RUN npm start
+FROM ubuntu:latest
+
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+
+RUN apt-get update && apt-get install -y nodejs
+
+WORKDIR /CDEC-19/full-devops-app/frontend/
+
+COPY package*.json ./
+
+RUN apt-get install -y npm
+
+RUN npm install
+
+COPY . .
+
 EXPOSE 3000
+
+CMD ["npm", "start"]
