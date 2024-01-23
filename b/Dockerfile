@@ -4,7 +4,7 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 
 RUN apt-get update && apt-get install -y nodejs
 
-WORKDIR /CDEC-19/full-devops-app/frontend/
+WORKDIR /usr/src/app
 
 COPY package*.json ./
 
