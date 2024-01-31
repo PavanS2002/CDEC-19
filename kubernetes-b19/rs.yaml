@@ -6,13 +6,11 @@ metadata:
   labels: 
       app: cbz-app
   namespace: test
-
 spec: 
    selector:
       matchlabels: 
         app: cbz-app
         project: Cloudblitz
-
       matchExpresions:
         - {key: app, operator: In, values: [my-app, cbz-app, demo-app]}
       template:
@@ -29,4 +27,3 @@ spec:
                 - containerPort: 80
       replicas: 3
   ...
-  
