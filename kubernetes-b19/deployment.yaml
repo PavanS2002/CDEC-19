@@ -1,39 +1,38 @@
 ---
 apiVersion: apps/v1
 kind: Deployment
-metadata: 
+metadata:
   name: my-deployment
-  labels: 
+  labels:
     app: my-app
-spec: 
-  templates:
+spec:
+  template:
     metadata:
       labels:
         app: my-app
-    spec: 
+    spec:
       containers:
         - name: my-container
           image: httpd
           ports:
             - containerPort: 80
-   replicas: 3
-   selector:
-     matchalabels:
-       app: my-app
-   strategy: 
-     type: RollingUpdate
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  strategy:
+    type: RollingUpdate
 ...
-
 ---
 apiVersion: v1
 kind: Service
-metadata: 
+metadata:
   name: my-svc
-spec: 
-  ports: 
+spec:
+  ports:
     - port: 80
       targetPort: 80
       protocol: TCP
-  selector: 
+  selector:
     app: my-app
 ...
