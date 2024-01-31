@@ -15,13 +15,13 @@ spec:
         - name: my-container
           image: httpd
           ports:
-            - containerport: 80
-   repllicas: 3
+            - containerPort: 80
+   replicas: 3
    selector:
-     metalabels:
+     matchalabels:
        app: my-app
    strategy: 
-     type: Rollingupdate
+     type: RollingUpdate
 ...
 
 ---
