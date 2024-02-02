@@ -1,0 +1,25 @@
+---
+apiVersion: app/v1
+kind: Deployment
+metadata:
+  name: backend
+  labels:
+      app: backend
+spec:
+  template:
+   metadata:
+     labels:
+       app: backend
+  spec:
+    containers:
+      - name: backend
+        image: Pavan2002/CDEC-19
+        ports:
+          - containerPort: 8080
+    replicas : 3
+    selector: 
+      metchlabels:
+        app: backend
+    strategy:
+      type: RollingUpdate
+  ...
