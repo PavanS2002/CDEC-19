@@ -17,9 +17,15 @@ spec:
             - containerport: 3306
       env:
         - name: MYSQL_ROOT_PASSWORD
-          valueFrom: 
+          valueFrom:
+            configMapKeyRef:
+              name: mysql-creds
+              key: DB_PASSWORD
         - name: USER_NAME
-          value: "Pavan"
+          valueFrom:
+          configMapKeyRef:
+            name: mysql-creds
+            key: DB_USER
 replicas: 3
 selector:
   matchLabels:
