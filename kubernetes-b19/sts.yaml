@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: statefulset
+metadata: 
+  name: my-sts
+  labels: 
+    app: mysql
+spec:
+  template: 
+    metadata:
+      labels: 
+        app: mysql
+    spec: 
+      container:
+        - name: mysql-container
+          image: mysql
+          ports:
+            - containerport: 3306
+      env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom: 
+        - name: USER_NAME
+          value: "Pavan"
+replicas: 3
+selector:
+  matchLabels:
+    app: mysql
+
