@@ -37,10 +37,10 @@ spec:
           #         name: mysql-creds
           #         key: DB_USER
 
-           Pass environment veriable as Secret
+          ###Pass environment veriable as Secret
           env:
-          - name: MYSQL_ROOT_PASSWORD
-             valueFrom:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
                secretKeyRef:
                  name: mysql-secret
                  key: DATABASE_PASS
