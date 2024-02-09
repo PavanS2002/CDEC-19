@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: statefulset
+kind: statefulSet
 metadata: 
   name: my-sts
   labels: 
