@@ -1,3 +1,4 @@
+
 apiVersion: apps/v1
 kind: StatefulSet
 metadata: 
@@ -14,20 +15,42 @@ spec:
         - name: mysql-container
           image: mysql
           ports:
-           - containerPort: 3306
-          env:
-            - name: MYSQL_ROOT_PASSWORD
-              valueFrom:
+            - containerPort: 3306
+
+          ### Pass environment variables as Direct Method   
+          # env:
+          #   - name: MYSQL_ROOT_PASSWORD
+          #     value: "redhat123"
+          #   - name: USER_NAME
+          #     value: "shubham"
+
+          ### Pass environment variable as ConfigMap
+           env:
+             - name: MYSQL_ROOT_PASSWORD
+               valueFrom:
                  configMapKeyRef:
                    name: mysql-creds
                    key: DB_PASSWORD
-            - name: USER_NAME
-              valueFrom:
+             - name: USER_NAME
+               valueFrom:
                  configMapKeyRef:
                    name: mysql-creds
                    key: DB_USER
-   replicas: 3
-   selctor:
-     matchlabels:
-       app: mysql
-                             
+
+          ### Pass environment veriable as Secret
+          #env:
+          #- name: MYSQL_ROOT_PASSWORD
+          #   valueFrom:
+          #     secretKeyRef:
+          #       name: mysql-secret
+          #       key: DATABASE_PASS
+          #  - name: USER_NAME
+          #    valueFrom:
+          #      secretKeyRef:
+          #        name: mysql-secret
+          #       key: DATABASE_USER
+
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mysql
