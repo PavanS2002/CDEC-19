@@ -26,8 +26,8 @@ spec:
                  configMapKeyRef:
                    name: mysql-creds
                    key: DB_USER
-  replicas: 3
-  selctor:
-    matchlabels:
-      app: mysql
+   replicas: 3
+   selctor:
+     matchlabels:
+       app: mysql
                              
