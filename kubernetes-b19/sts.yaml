@@ -24,8 +24,8 @@ spec:
           #   - name: USER_NAME
           #     value: "shubham"
 
-          Pass environment variable as ConfigMap
-           env:
+           Pass environment variable as ConfigMap
+          env:
              - name: MYSQL_ROOT_PASSWORD
                valueFrom:
                  configMapKeyRef:
