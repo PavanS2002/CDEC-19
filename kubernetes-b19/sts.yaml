@@ -46,8 +46,8 @@ spec:
                  key: DATABASE_PASS
             - name: USER_NAME
               valueFrom:
-                secretKeyRef:
-                  name: mysql-secret
+               secretKeyRef:
+                 name: mysql-secret
                  key: DATABASE_USER
 
   replicas: 3
