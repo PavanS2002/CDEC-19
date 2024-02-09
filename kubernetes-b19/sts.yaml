@@ -24,31 +24,31 @@ spec:
           #   - name: USER_NAME
           #     value: "shubham"
 
-           Pass environment variable as ConfigMap
-          env:
-             - name: MYSQL_ROOT_PASSWORD
-               valueFrom:
-                 configMapKeyRef:
-                   name: mysql-creds
-                   key: DB_PASSWORD
-             - name: USER_NAME
-               valueFrom:
-                 configMapKeyRef:
-                   name: mysql-creds
-                   key: DB_USER
-
-          ### Pass environment veriable as Secret
+          #Pass environment variable as ConfigMap
           #env:
-          #- name: MYSQL_ROOT_PASSWORD
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: mysql-secret
-          #       key: DATABASE_PASS
-          #  - name: USER_NAME
+          #  - name: MYSQL_ROOT_PASSWORD
           #    valueFrom:
-          #      secretKeyRef:
-          #        name: mysql-secret
-          #       key: DATABASE_USER
+          #       configMapKeyRef:
+          #         name: mysql-creds
+          #         key: DB_PASSWORD
+          #   - name: USER_NAME
+          #     valueFrom:
+          #       configMapKeyRef:
+          #         name: mysql-creds
+          #         key: DB_USER
+
+           Pass environment veriable as Secret
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+             valueFrom:
+               secretKeyRef:
+                 name: mysql-secret
+                 key: DATABASE_PASS
+            - name: USER_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                 key: DATABASE_USER
 
   replicas: 3
   selector:
