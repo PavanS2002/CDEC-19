@@ -35,7 +35,7 @@ resource "aws_instance" "my_instance" {
      ami = var.image_id
      instance_type = varr.instance_type
      key_name = "1.mum"
-     vpc_security_group_ids = ["sg-028e2dc3ff1d822ed", ]
+     vpc_security_group_ids = ["sg-028e2dc3ff1d822ed", Terraform ]
 }
 
 
