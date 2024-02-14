@@ -42,7 +42,7 @@ resource "aws_instance" "new_instance" {
 # Variables
 
 Variables "image_id" {
-    default = "03f4878755434977f"
+    default = "ami-03f4878755434977f"
 }
 
 Variables "instance_type" {
