@@ -41,14 +41,14 @@ resource "aws_instance" "new_instance" {
 
 # Variables
 
-Variables "image_id" {
+variables "image_id" {
     default = "ami-03f4878755434977f"
 }
 
-Variables "instance_type" {
+variables "instance_type" {
     default = "t2.micro"
 }
 
-Variables "vpc_id" {
+variables "vpc_id" {
     default = "sg-028e2dc3ff1d822ed"
 }
