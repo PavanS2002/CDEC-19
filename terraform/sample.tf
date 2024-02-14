@@ -1,41 +1,55 @@
 provider "aws" {
-    region = "ap-south-1"
+    region = "us-east-1"
 }
 
-#Create Security Group
 
+# Create Security Group
 resource "aws_security_group" "my_sg" {
-    name = "Terraform"
-    description = "allow-ssh adn http"
+    name = "my-sec-group"
+    description = "allow-ssh and http"
     vpc_id = var.vpc_id
     ingress {
         protocol = "TCP"
         from_port = 22
-        to_port = 22
+        to_port  = 22
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+    ingress {
+        protocol = "TCP"
+        from_port = "80"
+        to_port  = "80"
         cidr_blocks = ["0.0.0.0/0"]
     }
     egress {
-        protocol = "TCP"
-        from_port = 80
-        to_port = 80
+        protocol = "-1"  
+        from_port = 0
+        to_port = 0
         cidr_blocks = ["0.0.0.0/0"]
     }
 }
 
-#Launch AWS instance
 
+# Launch AWS Instance
 resource "aws_instance" "my_instance" {
-     ami = var.image_id
-     instance_type = var.instance_type
-     key_name = "1.mum"
-     vpc_security_group_ids = ["sg-028e2dc3ff1d822ed"]
+    ami = var.image_id
+    instance_type = var.machine_type
+    key_name = "shubham-nv"
+    vpc_security_group_ids = [ "sg-028e2dc3ff1d822ed", aws_security_group.my_sg.id ]
+    tags = {
+        Name = "my-instance"
+        env = "dev"
+    }
 }
 
-resource "aws_instance" "new_instance" {
-     ami = var.image_id
-     instance_type = var.instance_type
-     key_name = "1.mum"
-     vpc_security_group_ids = ["sg-028e2dc3ff1d822ed", "Terraform" ]
+resource "aws_instance" "another_instance" {
+    ami = var.image_id
+    instance_type = var.machine_type
+    key_name = "shubham-nv"
+    vpc_security_group_ids = ["sg-028e2dc3ff1d822ed"]
+    tags = {
+        Name = "another-instance"
+        env = "dev"
+    }
 }
 
 
@@ -45,7 +59,7 @@ variable "image_id" {
     default = "ami-03f4878755434977f"
 }
 
-variable "instance_type" {
+variable "machine_type" {
     default = "t2.micro"
 }
 
