@@ -70,7 +70,7 @@ resource "aws_security_group" "my_sg" {
 
 resource "aws_instance" "instance_1" {
     ami = var.image_id
-    instance_type = var.instance_tyoe
+    instance_type = var.instance_type
     key_name = var.key_pair
     vpc_security_group_ids = [aws_security_group.my_sg.id]
     tags = {
