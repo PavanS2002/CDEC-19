@@ -34,7 +34,7 @@ resource "aws_instance" "my_instance" {
     ami = var.image_id
     instance_type = var.machine_type
     key_name = "shubham-nv"
-    vpc_security_group_ids = [ "sg-028e2dc3ff1d822ed", aws_security_group.my_sg.id ]
+    vpc_security_group_ids = [ "sg-0f201ab5b246cee99", aws_security_group.my_sg.id ]
     tags = {
         Name = "my-instance"
         env = "dev"
@@ -45,7 +45,7 @@ resource "aws_instance" "another_instance" {
     ami = var.image_id
     instance_type = var.machine_type
     key_name = "shubham-nv"
-    vpc_security_group_ids = ["sg-028e2dc3ff1d822ed"]
+    vpc_security_group_ids = ["sg-0f201ab5b246cee99"]
     tags = {
         Name = "another-instance"
         env = "dev"
@@ -64,5 +64,5 @@ variable "machine_type" {
 }
 
 variable "vpc_id" {
-    default = "sg-028e2dc3ff1d822ed"
+    default = "sg-0f201ab5b246cee99"
 }
