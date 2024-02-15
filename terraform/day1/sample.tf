@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 #Create Security Group
-resource = "aws_security_group" "my-sg_2" {
+resource = "aws_security_group" "my_sg_2" {
     name = "my-sec-group"
     description = "allow ssh and http"
     vpc_id  = var.vpc_id
