@@ -19,11 +19,13 @@ variable "env" {
 }
 
 variable "image_id" {
-    default = "ami-0449c34f967dbf18a"
+    default = "ami-03f4878755434977f"
 }
+
 variable "instance_type" {
     default = "t2.micro"
 }
+
 variable "key_pair" {
     default = "1.mum"
 }
