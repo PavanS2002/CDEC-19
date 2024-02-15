@@ -21,7 +21,7 @@ resource "aws_security_group" "my_sg_2" {
     }
     egress {
         protocol = "-1"
-        from_pport = 0
+        from_port = 0
         to_port = 0
         cidr_blocks = ["0.0.0.0/0"]
     }
@@ -49,7 +49,7 @@ variable "machine_type" {
     default = "t2.micro"
 }
 
-variable "ket_name" {
+variable "key_pair" {
     default = "1.mum"
 }
 
