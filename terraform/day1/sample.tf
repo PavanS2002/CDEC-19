@@ -32,7 +32,7 @@ resource "aws_instance" "my_first_instance" {
     ami = var.image_id
     instance_type = var.machine_type
     key_name = var.key_pair
-    vpc_security_group_ids = ["sg-0963907b7bbf42272"]
+    vpc_security_group_ids = ["sg-028e2dc3ff1d822ed"]
     tags = {
         Name = "my-first-instnace"
         env = "dev"
