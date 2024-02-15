@@ -1,5 +1,5 @@
 provider "aws" {
-    region = "us-west-1"
+    region = "ap-south-1"
 }
 
 resource "aws_vpc" "my_vpc" {
@@ -14,8 +14,8 @@ resource "aws_subnet" "private_subnet" {
     vpc_id     = aws_vpc.my_vpc.id
     cidr_block = var.private_subnet_cidr
     tags = {
-        Name = var.env
-        env = "${var.project}-private-subnet"
+        Name = "${var.project}-private-subnet"
+        env = var.env
     } 
 }
 
@@ -72,9 +72,9 @@ resource "aws_instance" "instance_1" {
     ami = var.image_id
     instance_type = var.instance_type
     key_name = var.key_pair
-    vpc_security_group_ids = [aws_security_group.my_sg.id]
+    vpc_security_group_ids = [aws_security_group.my_sg.idw ]
     tags = {
-        Name = "${var.project}-private_subnet.id"
+        Name = "${var.project}-private-instance"
         env = var.env
     }
     subnet_id = aws_subnet.private_subnet.id
