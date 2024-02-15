@@ -82,7 +82,7 @@ resource "aws_instance" "instance_1" {
 
 resource "aws_instance" "instance_2" {
     ami = var.image_id
-    instance_type = var.instance_type
+    instance_type = "t3.micro"
     key_name = var.key_pair
     vpc_security_group_ids = [aws_security_group.my_sg.id]
     tags = {
