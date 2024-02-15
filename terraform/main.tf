@@ -72,7 +72,7 @@ resource "aws_instance" "instance_1" {
     ami = var.image_id
     instance_type = var.instance_type
     key_name = var.key_pair
-    vpc_security_group_ids = [aws_security_group.my_sg.idw ]
+    vpc_security_group_ids = [aws_security_group.my_sg.id]
     tags = {
         Name = "${var.project}-private-instance"
         env = var.env
