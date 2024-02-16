@@ -29,8 +29,8 @@ resource "aws_s3_bucket_policy" "my_bucket_policy" {
         Principal = "*",
         Action = [
           "s3:GetObject"
-          "S3:PutObject"
-          "S3:ListObject"
+          ,"S3:PutObject"
+          ,"S3:ListObject"
         ],
         Resource = "arn:aws:s3:::new-bucket/*"
       }
