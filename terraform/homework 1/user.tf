@@ -9,7 +9,7 @@ resource "aws_iam_user" "my_user" {
 }
 
 #Create S3 Bucket 
-resoure "aws_s3_bucket" "new_bucket" {
+resource "aws_s3_bucket" "new_bucket" {
     bucket = "new-bucket"
     acl = "private"
     tags = {
@@ -21,7 +21,7 @@ resoure "aws_s3_bucket" "new_bucket" {
 #Create Policy For Bucket
 resource "aws_s3_bucket_policy" "amazon" {
     bucket = aws_s3_bucket.amazon
-    policy = <<EOF {
+    policy = jsonencode {
         version = "2012-10-17"
         statement = [{
             Effect = "Allow"
