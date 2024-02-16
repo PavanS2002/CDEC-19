@@ -19,20 +19,27 @@ resource "aws_s3_bucket" "new_bucket" {
 } 
 
 #Create Policy For Bucket
-resource "aws_s3_bucket_policy" "amazon" {
-    bucket = aws_s3_bucket.amazon
-    policy = this is simple policy
-} 
-    policy = jsonencode {
-        version = "2012-10-17"
-        statement = [{
-            Effect = "Allow"
-            Principal = "*"
-            Action = [
-                "s3:GetObject" , "s3:ListBucket" , "s3:PutObject"
-            ]
-            Resource = "arn:aws:s3::new-bucket"
-        }
-        ]
-    }
+resource "aws_s3_bucket_policy" "my_bucket_policy" {
+  bucket = "terraform-bucket"
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Principal = "*",
+        Action = [
+          "s3:GetObject"
+          "S3:PutObject"
+          "S3:ListObject"
+        ],
+        Resource = "arn:aws:s3:::new-bucket/*"
+      }
+    ]
+  })
+}
+
+#policy attach to user
+resource "aws_iam_user_policy_attachment" "attachment-policy" {
+  user       = aws_iam_user.my_user.name
+  policy_arn = aws_iam_policy.my_bucket_policy.arn
 }
