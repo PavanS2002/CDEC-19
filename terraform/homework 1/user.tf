@@ -11,7 +11,7 @@ resource "aws_iam_user" "my_user" {
 #Create S3 Bucket 
 resource "aws_s3_bucket" "new_bucket" {
     bucket = "new-bucket"
-    acl = "private"
+    acl = private
     tags = {
         Name = "new-bucket"
         env = "dev"
