@@ -41,5 +41,9 @@ resource "aws_s3_bucket_policy" "my_bucket_policy" {
 #policy attach to user
 resource "aws_iam_user_policy_attachment" "attachment-policy" {
   user       = aws_iam_user.my_user.name
+<<<<<<< HEAD
+  policy_arn = aws_iam_policy.new-bucket.arn
+=======
   policy_arn = aws_iam_policy.terraform-bucket.arn
+>>>>>>> 9f74229c1e89fd615d0e917c6476f984bb2a679a
 }
