@@ -21,7 +21,7 @@ resource "aws_s3_bucket" "new_bucket" {
 #Create Policy For Bucket
 resource "aws_s3_bucket_policy" "amazon" {
     bucket = aws_s3_bucket.amazon
-    policy = "jsonencode" {
+    policy = jsonencode{
         version = "2012-10-17"
         statement = [{
             Effect = "Allow"
