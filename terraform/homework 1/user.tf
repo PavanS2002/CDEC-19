@@ -10,7 +10,11 @@ resource "aws_iam_user" "my_user" {
 
 #Create S3 Bucket 
 resource "aws_s3_bucket" "pavan_bucket" {
+<<<<<<< HEAD
+  bucket = "new_bucket"
+=======
   bucket = "new-bucket"
+>>>>>>> 92393c7de945d50f3ae2f9a3ac296f978417d9d1
 }
 
 resource "aws_s3_bucket_ownership_controls" "pavan_bucket" {
