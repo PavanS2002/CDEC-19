@@ -3,8 +3,8 @@ provider "aws" {
 }
 
 # Craete User
-resource "aws_iam_user" "my_user" {
-    name = "my-user"
+resource "aws_iam_user" "new_user" {
+    name = "new-user"
     path = "/"
 }
 
