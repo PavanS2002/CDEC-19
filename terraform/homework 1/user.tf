@@ -10,7 +10,7 @@ resource "aws_iam_user" "new_user" {
 
 #Create S3 Bucket 
 resource "aws_s3_bucket" "my_bucket" {
-  bucket = "new-bucket"
+  bucket = ""existing-bucket-name""
 }
 
 resource "aws_s3_bucket_ownership_controls" "my_bucket" {
