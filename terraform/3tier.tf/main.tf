@@ -1,10 +1,10 @@
 provider "aws" {
-    region = "ap-south-1"
+    region = var.aws_region
+    profile = var.aws_profile
 }
 
 #Create vpc
-module "vpc" {
-  source = "terraform-aws-modules/vpc/aws"
+resource "aws_vpc" "my_vpc" {
 
   name = "main"
   cidr = var.vpc_cidr
@@ -15,7 +15,6 @@ module "vpc" {
   database_subnets = var.database_subnets
 
   enable_nat_gateway = true
-  enable_vpn_gateway = false
 
   public_subnet_names   = ["web-subnet-1", "web-subnet-2"]
   private_subnet_names  = ["app-subnet-1", "app-subnet-2"]
@@ -31,35 +30,38 @@ module "vpc" {
 resource "aws_security_group" "web" {
   name        = "web"
   description = "Allow inbound traffic for web tier"
-  vpc_id      = module.vpc.vpc_id
+  vpc_id      = aws_vpc.my_vpc.id
 } 
 
 
 resource "aws_security_group_rule" "web" {
   security_group_id = aws_security_group.web.id
 
-  type        = "ingress"
+ingress {
   from_port   = 80
   to_port     = 80
-  protocol    = "tcp"
+  protocol    = "TCP"
   cidr_blocks = ["0.0.0.0/0"]
+  }
 }
 
 resource "aws_security_group_rule" "web_ssh" {
   security_group_id = aws_security_group.web.id
 
-  type        = "ingress"
+ingress {
   from_port   = 22
   to_port     = 22
-  protocol    = "tcp"
+  protocol    = "TCP"
   cidr_blocks = ["0.0.0.0/0"] # Replace with your desired CIDR blocks for SSH access
+  }
 }
 
+
 #Create AWS Launch Template
-resource "aws_launch_template" "web" {
+resource "aws_launch_template" "my_web" {
   name_prefix   = "web-lt-"
-  image_id      = "ami-007855ac798b5175e" # AMI ID for Ubuntu 22.04; replace it with the appropriate AMI ID for your use case
-  instance_type = var.web_instance_type   #change instance size to your specifications in .tfvars file, such as M5 General
+  image_id      = "ami-0449c34f967dbf18a"
+  instance_type = var.my_web
 
   vpc_security_group_ids = [aws_security_group.web.id]
 
@@ -73,11 +75,11 @@ resource "aws_launch_template" "web" {
 #Create AWS AutoScaling Group
 resource "aws_autoscaling_group" "web" {
   name_prefix          = "web-asg-"
-  launch_configuration = aws_launch_template.web.id
+  launch_configuration = aws_launch_template.my_web.id
   min_size             = 1
   max_size             = 4
   desired_capacity     = 2
-  vpc_zone_identifier  = module.vpc.public_subnets
+  vpc_zone_identifier  = aws_vpc.public_subnets
   target_group_arns    = [aws_lb_target_group.web.arn]
 
   tag {
@@ -109,7 +111,7 @@ resource "aws_lb" "web" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.web.id]
-  subnets            = module.vpc.public_subnets
+  subnets            = aws_vpc.public_subnets
 
   tags = {
     Terraform   = "true"
@@ -121,7 +123,7 @@ resource "aws_lb_target_group" "web" {
   name     = "web-tg"
   port     = 80
   protocol = "HTTP"
-  vpc_id   = module.vpc.vpc_id
+  vpc_id   = aws_vpc.vpc_id
 }
 
 resource "aws_lb_listener" "web" {
@@ -140,7 +142,7 @@ resource "aws_lb" "app" {
   internal           = true
   load_balancer_type = "application"
   security_groups    = [aws_security_group.app.id]
-  subnets            = module.vpc.private_subnets
+  subnets            = aws_vpc.private_subnets
 
   tags = {
     Terraform   = "true"
@@ -152,7 +154,7 @@ resource "aws_lb_target_group" "app" {
   name     = "app-tg"
   port     = 80
   protocol = "HTTP"
-  vpc_id   = module.vpc.vpc_id
+  vpc_id   = aws_vpc.vpc_id
 }
 
 resource "aws_lb_listener" "app" {
@@ -169,7 +171,7 @@ resource "aws_lb_listener" "app" {
 #Database Subnet Group
 resource "aws_db_subnet_group" "db" {
   name       = "db"
-  subnet_ids = module.vpc.database_subnets
+  subnet_ids = aws_vpc.database_subnets
 
   tags = {
     Terraform   = "true"
@@ -181,7 +183,7 @@ resource "aws_db_subnet_group" "db" {
 resource "aws_security_group" "rds" {
   name        = "rds"
   description = "Allow inbound traffic for db tier"
-  vpc_id      = module.vpc.vpc_id
+  vpc_id      = aws_vpc.vpc_id
 
   tags = {
     Terraform   = "true"
@@ -224,8 +226,7 @@ resource "aws_db_instance" "main" {
 
   multi_az = var.multi_az
 
-  # To ensure the primary instance is in us-east-1a, specify its availability zone
-  availability_zone = "us-east-1a"
+  availability_zone = "us-west-1"
 
   backup_retention_period = 7
   skip_final_snapshot     = true
@@ -235,74 +236,3 @@ resource "aws_db_instance" "main" {
     Environment = "dev"
   }
 }
-
-#Variables
-
-variable "aws_region" {
-  description = "AWS region to deploy the infrastructure"
-  default     = "us-east-1"
-}
-
-variable "aws_profile" {
-  description = "AWS CLI profile to use for authentication"
-  default     = "default"
-}
-
-variable "environment" {
-  description = "Environment for the infrastructure (e.g., dev, staging, prod)"
-  default     = "dev"
-}
-
-variable "vpc_cidr" {
-  description = "CIDR block for the VPC"
-  default     = "10.0.0.0/16"
-}
-
-variable "public_subnets" {
-  description = "CIDR blocks for public subnets"
-  type        = list(string)
-  default     = ["10.0.101.0/24", "10.0.102.0/24"]
-}
-
-variable "private_subnets" {
-  description = "CIDR blocks for private subnets"
-  type        = list(string)
-  default     = ["10.0.1.0/24", "10.0.2.0/24"]
-}
-
-variable "database_subnets" {
-  description = "CIDR blocks for database subnets"
-  type        = list(string)
-  default     = ["10.0.3.0/24", "10.0.4.0/24"]
-}
-
-variable "web_instance_type" {
-  description = "EC2 instance type for the web tier"
-  default     = "t2.micro"
-}
-
-variable "app_instance_type" {
-  description = "EC2 instance type for the app tier"
-  default     = "t2.micro"
-}
-
-variable "db_instance_class" {
-  description = "RDS instance class for the database tier"
-  default     = "db.t2.micro"
-}
-
-variable "db_username" {
-  description = "Username for the RDS instance"
-  default     = "admin"
-}
-
-variable "db_password" {
-  description = "Password for the RDS instance"
-  sensitive   = true
-}
-
-variable "multi_az" {
-  description = "Multi-az deployment for RDS"
-  default     = false
-}
-

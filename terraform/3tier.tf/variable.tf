@@ -1,6 +1,6 @@
 variable "aws_region" {
   description = "AWS region to deploy the infrastructure"
-  default     = "us-east-1"
+  default     = "ap-south-1"
 }
 
 variable "aws_profile" {
@@ -15,7 +15,7 @@ variable "environment" {
 
 variable "vpc_cidr" {
   description = "CIDR block for the VPC"
-  default     = "10.0.0.0/16"
+  default     = "10.0.0.0/24"
 }
 
 variable "public_subnets" {
@@ -53,15 +53,29 @@ variable "db_instance_class" {
 
 variable "db_username" {
   description = "Username for the RDS instance"
-  default     = "admin"
+  default     = "Pavan"
 }
 
 variable "db_password" {
   description = "Password for the RDS instance"
-  sensitive   = true
+  sensitive     = true
 }
 
 variable "multi_az" {
   description = "Multi-az deployment for RDS"
   default     = false
 }
+
+aws_region        = "ap-south-1"
+profile           = "iamadmin-general"
+environment       = "dev"
+vpc_cidr          = "10.0.0.0/16"
+public_subnets    = ["10.0.101.0/24", "10.0.102.0/24"]
+private_subnets   = ["10.0.1.0/24", "10.0.2.0/24"]
+database_subnets  = ["10.0.3.0/24", "10.0.4.0/24"]
+web_instance_type = "t2.micro"
+app_instance_type = "t2.micro"
+db_instance_class = "db.t2.micro"
+db_username       = "Pavan"
+db_password       = "Pavan123"
+multi_az          = false
