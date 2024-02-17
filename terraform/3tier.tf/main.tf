@@ -1,5 +1,5 @@
 provider "aws" {
-    region = var.aws_region
+    region = "ap-south-1"
     profile = var.aws_profile
 }
 
@@ -7,9 +7,9 @@ provider "aws" {
 resource "aws_vpc" "my_vpc" {
 
   name = "main"
-  cidr = var.vpc_cidr
+  vpc_cidr = var.vpc_cidr
 
-  azs              = ["${var.aws_region}a", "${var.aws_region}b"]
+  azs              = ["ap-south-1a", "ap-south-1b"]
   public_subnets   = var.public_subnets
   private_subnets  = var.private_subnets
   database_subnets = var.database_subnets
@@ -202,7 +202,7 @@ resource "aws_security_group_rule" "rds" {
 }
 
 #RDS Instance
-resource "aws_security_group_rule" "rds" {
+resource "aws_security_group_rule" "rds_123" {
   security_group_id = aws_security_group.rds.id
 
   type        = "ingress"
