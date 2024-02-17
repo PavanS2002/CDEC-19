@@ -9,20 +9,20 @@ resource "aws_iam_user" "my_user" {
 }
 
 #Create S3 Bucket 
-resource "aws_s3_bucket" "pavan_bucket" {
+resource "aws_s3_bucket" "my_bucket" {
   bucket = "new-bucket"
 }
 
-resource "aws_s3_bucket_ownership_controls" "pavan_bucket" {
-  bucket = aws_s3_bucket.pavan_bucket.id
+resource "aws_s3_bucket_ownership_controls" "my_bucket" {
+  bucket = aws_s3_bucket.my_bucket.id
   rule {
     object_ownership = "BucketOwnerPreferred"
   }
 }
 
-resource "aws_s3_bucket_acl" "pavan_bucket" {
-  depends_on = [aws_s3_bucket_ownership_controls.pavan_bucket]
+resource "aws_s3_bucket_acl" "my_bucket" {
+  depends_on = [aws_s3_bucket_ownership_controls.my_bucket]
 
-  bucket = aws_s3_bucket.pavan_bucket.id
+  bucket = aws_s3_bucket.my_bucket.id
   acl    = "private"
 }
