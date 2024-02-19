@@ -85,17 +85,17 @@ resource "aws_alb" "this" {
   }
 }
 
-# dac_db_subnet_group.tf
-resource "aws_db_subnet_group" "dac_db_subnet_group" {
+# rds_db_subnet_group.tf
+resource "aws_db_subnet_group" "rds_db_subnet_group" {
   name       = "dac_db_subnet_group"
-  subnet_ids = [aws_subnet.dac_db_subnet_1.id, aws_subnet.dac_db_subnet_2.id]
+  subnet_ids = [aws_subnet.rds_db_subnet_1.id, aws_subnet.rds_db_subnet_2.id]
 
   tags = {
-    Name = "dac_db_subnet_group"
+    Name = "rds_db_subnet_group"
   }
 }
 
-# dac_db.tf
+# rds_db.tf
 resource "aws_db_instance" "dac_db" {
   allocated_storage       = 20
   storage_type            = "gp2"
