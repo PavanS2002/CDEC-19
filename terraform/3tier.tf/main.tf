@@ -8,7 +8,7 @@ resource "aws_vpc" "my_vpc" {
   name = "main"
   vpc_cidr = var.vpc_cidr
 
-  azs              = ["ap-south-1a", "ap-south-1b"]
+  azs              = ["ap-south-1a" , "ap-south-1b"]
   public_subnets   = var.public_subnets
   private_subnets  = var.private_subnets
   database_subnets = var.database_subnets
