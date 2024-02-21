@@ -6,7 +6,7 @@ module "asg"  {
     source = "./modules/autoscaling"
     image_id = var.ami
     instance_type = var.instance_type
-    key_pair = var.key_pair
+    key_pair = var.ssh_key
     project = var.project
     security_group_id = var.sg_id
     min_size = var.min_size
