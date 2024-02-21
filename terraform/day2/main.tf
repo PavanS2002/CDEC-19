@@ -17,7 +17,7 @@ module "asg"  {
 }
 
 
-modules "lb"  {
+module "lb"  {
     source = "./modules/loadbalncer"
     project = var.project
     env = var.env
