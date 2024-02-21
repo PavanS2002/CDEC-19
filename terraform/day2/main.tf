@@ -6,7 +6,7 @@ module "asg"  {
     source = "./modules/autoscaling"
     image_id = var.ami
     instance_type = var.instance_type
-    key_pair = var.kay_name
+    key_pair = var.key_pair
     project = var.project
     security_group_id = var.sg_id
     min_size = var.min_size
@@ -21,7 +21,7 @@ module "lb"  {
     source = "./modules/loadbalncer"
     project = var.project
     env = var.env
-    security_group_id = var.security_group_id
+    security_group_id = var.sg_id
     subnet_ids = var.subnets
     vpc_id = var.vpc_id
     autoscaling_group_name_home = module.asg.asg_home_name
