@@ -29,7 +29,7 @@ resource "aws_subnet" "subnet_2" {
     }
 }
 
-data "aws_iam_policy_document" "json_role" {
+data "aws_iam_policy_document" "assume_role" {
     statement {
         effect = "Allow"
         principals {
@@ -40,22 +40,22 @@ data "aws_iam_policy_document" "json_role" {
     }
 }
 
-resource "aws_iam_role" "eks_ciuster_role" {
+resource "aws_iam_role" "eks_cluster_role" {
     name = "eks-cluster-role"
-    assume_role_policy = data.aws_iam_policy_document.json_role.json_role
+    assume_role_policy = data.aws_iam_policy_document.assum_role.json
 }
 
 resource "aws_iam_role_policy_attachment" "eks_k8s" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = aws_iam_policy_document.json_role.name
+  role       = aws_iam_policy_document.assume_role.name
 }
 
 resource "aws_iam_role_policy_attachment" "eks_cluster" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-  role       = aws_iam_policy_document.json_role.name
+  role       = aws_iam_policy_document.assume_role.name
 }
 #cluster
 resource "aws_eks_cluster" "first_cluster" {
     name = "new_cluster"
-    role_arn = aws_iam_role.json_role.arn
+    role_arn = aws_iam_role.eks_cluster_role.arn
 }
