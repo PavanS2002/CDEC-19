@@ -36,7 +36,7 @@ data "aws_iam_policy_document" "assume_role" {
             type     = "Service"
             identifiers = ["eks.amazonaws.com"]
         }
-        actions = ["sts:Jsonrole"]
+        actions = ["sts:AssumeRole"]
     }
 }
 
