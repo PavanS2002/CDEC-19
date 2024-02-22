@@ -22,7 +22,7 @@ resource "aws_subnet" "subnet_1" {
 
 resource "aws_subnet" "subnet_2" {
     vpc_id = aws_vpc.eks_vpc.id
-    cidr_block = "169.254.0.16/20"
+    cidr_block = "169.254.0.8/20"
     tags = {
         Name = "subnet-2"
         env = "dev"
