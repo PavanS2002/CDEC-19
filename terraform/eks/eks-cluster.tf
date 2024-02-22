@@ -3,7 +3,6 @@ provider "aws" {
 }
 
 resource "aws_vpc" "eks_vpc" {
-    name = "eks-vpc1"
     cidr_block = "172.20.21.0/18"
     tags = {
         Name = "cluster"
@@ -33,7 +32,7 @@ resource "aws_subnet" "subnet_2" {
 data "aws_iam_policy_document" "json_role" {
     statement {
         effect = "Allow"
-        Principals {
+        principals {
             type     = "Service"
             identifiers = ["eks.amazonaws.com"]
         }
@@ -48,12 +47,12 @@ resource "aws_iam_role" "eks_ciuster_role" {
 
 resource "aws_iam_role_policy_attachment" "eks_k8s" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = aws_iam_role.json_role.name
+  role       = aws_iam_policy_document.json_role.name
 }
 
 resource "aws_iam_role_policy_attachment" "eks_cluster" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-  role       = aws_iam_role.json_role.name
+  role       = aws_iam_policy_document.json_role.name
 }
 #cluster
 resource "aws_eks_cluster" "first_cluster" {
