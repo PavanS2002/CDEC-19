@@ -5,7 +5,7 @@ provider "aws" {
 terraform {
     backend "s3"{
         region = "ap-south-1"
-        bucket = "cdec-19"
+        bucket = "cdec-19-90"
         key = "./terraform.tfstate"
     }
 }
@@ -47,8 +47,8 @@ resource "aws_instance" "my_instnace" {
 
     provisioner "remote-exec" {
         inline = [
-            "sudo apt-get install httpd -y"
-            "sudo systemctl start httpd"
+            "sudo apt-get install httpd -y",
+            "sudo systemctl start httpd",
             "sudo systemctl enable httpd"
         ]
     }
