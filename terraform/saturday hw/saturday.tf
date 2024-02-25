@@ -12,7 +12,7 @@ resource "aws_vpc" "home_vpc" {
 
 resource "aws_instance" "homework-1" {
     ami  = var.image_id
-    key_name = var.kay_pair
+    key_name = var.key_pair
     instance_type = var.instance_type
     vpc_security_group_ids = [aws_security_group.home_sg.id]
 }
