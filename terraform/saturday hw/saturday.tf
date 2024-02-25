@@ -20,7 +20,7 @@ resource "aws_instance" "homework-1" {
 resource "aws_security_group" "home_sg" {
     name = "home-sg"
     description = "allow http and ssh"
-    vpc_id = aws_vpc.my_vpc.id
+    vpc_id = aws_vpc.home_vpc.id
     ingress {
         protocol = "TCP"
         to_port  = 22
