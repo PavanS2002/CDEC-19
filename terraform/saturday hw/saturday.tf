@@ -42,7 +42,7 @@ resource "aws_security_group" "home_sg" {
 }
 
 resource "aws_eip" "home-eip" {
-  instance = aws_instance.home-1.id
+  instance = aws_instance.homework-1.id
   vpc      = true
   tags = {
     name = "home-eip"
@@ -52,6 +52,6 @@ resource "aws_eip" "home-eip" {
 
 # Associate the Elastic IP to the instance
 resource "aws_eip_association" "VPC_A_EIP-Association" {
-  instance_id   = aws_instance.home-1.id
+  instance_id   = aws_instance.homework-1.id
   allocation_id = aws_eip.home-eip.id
 }
