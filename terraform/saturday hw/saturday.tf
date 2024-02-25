@@ -14,7 +14,7 @@ resource "aws_instance" "homework-1" {
     ami  = var.image_id
     key_name = var.key_pair
     instance_type = var.instance_type
-    vpc_security_group_ids = aws_security_group.home_sg.id
+    vpc_security_group_ids = [aws_security_group.home_sg.id]
 }
 
 resource "aws_security_group" "home_sg" {
