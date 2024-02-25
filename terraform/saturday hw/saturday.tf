@@ -2,10 +2,10 @@ provider "aws" {
     region = "ap-south-1"
 }
 
-resource "aws_vpc" "home_vpc" {
+resource "aws_vpc" "home-vpc" {
     cidr_block = "192.168.0.0/16"
     tags = {
-        Name = "home-vpc"
+        Name = "home"
         env = "dev"
     }
 }
@@ -18,9 +18,9 @@ resource "aws_instance" "homework-1" {
 }
 
 resource "aws_security_group" "home_sg" {
-    name = "home-sg"
+    name = "home"
     description = "allow http and ssh"
-    vpc_id = aws_vpc.home_vpc.id
+    vpc_id = [aws_vpc.home-vpc.id]
     ingress {
         protocol = "TCP"
         to_port  = 22
