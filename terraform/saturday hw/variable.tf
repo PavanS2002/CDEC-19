@@ -1,4 +1,4 @@
-variable "image-id" {
+variable "image_id" {
     default = "ami-03f4878755434977f"
 }
 
