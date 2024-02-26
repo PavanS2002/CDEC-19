@@ -15,6 +15,7 @@ resource "aws_instance" "homework-1" {
     key_name = "1.,mum"
     instance_type = "t2.micro"
     vpc_security_group_ids = [aws_security_group.home_sg.id]
+    vpc_id = aws_vpc.my_vpc.id
 }
 
 resource "aws_security_group" "home_sg" {
