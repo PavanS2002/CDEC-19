@@ -11,9 +11,9 @@ resource "aws_vpc" "my_vpc" {
 }
 
 resource "aws_instance" "homework-1" {
-    ami  = var.image_id
-    key_name = var.key_pair
-    instance_type = var.instance_type
+    ami  = "ami-03f4878755434977f"
+    key_name = "1.,mum"
+    instance_type = "t2.micro"
     vpc_security_group_ids = [aws_security_group.home_sg.id]
 }
 
