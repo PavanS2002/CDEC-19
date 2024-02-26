@@ -5,14 +5,14 @@ provider "aws" {
 resource "aws_vpc" "my_vpc" {
     cidr_block = "192.168.0.0/16"
     tags = {
-        Name = "home"
+        Name = "my_vpc"
         env = "dev"
     }
 }
 
-resource "aws_instance" "homework-1" {
+resource "aws_instance" "home_instance" {
     ami  = "ami-03f4878755434977f"
-    key_name = "1.,mum"
+    key_name = "1.mum"
     instance_type = "t2.micro"
     vpc_security_group_ids = [aws_security_group.home_sg.id]
     vpc_id = aws_vpc.my_vpc.id
@@ -43,7 +43,7 @@ resource "aws_security_group" "home_sg" {
 }
 
 resource "aws_eip" "home-eip" {
-  instance = aws_instance.homework-1.id
+  instance = aws_instance.home_instance.id
   vpc      = "true"
   tags = {
     name = "home-eip"
@@ -53,6 +53,6 @@ resource "aws_eip" "home-eip" {
 
 # Associate the Elastic IP to the instance
 resource "aws_eip_association" "VPC_A_EIP-Association" {
-  instance_id   = aws_instance.homework-1.id
+  instance_id   = aws_instance.home_instance.id
   allocation_id = aws_eip.home-eip.id
 }
